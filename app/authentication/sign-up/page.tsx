@@ -10,7 +10,7 @@ import {
 } from "@/app/_components/ui/card";
 import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
-import { Loader2, X } from "lucide-react";
+import { AlertOctagon, Loader2, X } from "lucide-react";
 import Image from "next/image";
 
 import { signUp } from "@/app/_lib/auth-client";
@@ -67,6 +67,19 @@ export default function SignUp() {
       password: data.password,
       name: `${data.firstName} ${data.lastName}`,
       image: data.image ? await convertImageToBase64(data.image) : "",
+      fetchOptions: {
+        onError: (error) => {
+          toast.error(error.error.message, {
+            icon: <AlertOctagon className="w-4 h-4" />,
+            position: "top-center",
+            richColors: true,
+          });
+        },
+        onSuccess: () => {
+          router.push("/authentication/sign-in");
+          toast.success("Login realizado com sucesso!");
+        },
+      },
     });
   }
 
