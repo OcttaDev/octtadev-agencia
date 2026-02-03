@@ -18,25 +18,13 @@ import { signUp } from "@/app/_lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useState } from "react";
-
-const signUpSchema = z
-  .object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
-    email: z.string().email("Invalid email"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    passwordConfirmation: z.string(),
-  })
-  .refine((data) => data.password === data.passwordConfirmation, {
-    message: "Passwords do not match",
-    path: ["passwordConfirmation"],
-  });
-
-type SignUpFormData = z.infer<typeof signUpSchema>;
+import {
+  signUpSchema,
+  type SignUpFormData,
+} from "@/app/_schemas/sign-up-schema";
 
 export default function SignUp() {
   const router = useRouter();
@@ -46,8 +34,6 @@ export default function SignUp() {
   const {
     control,
     handleSubmit,
-    watch,
-    setValue,
     formState: { isSubmitting, errors },
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -59,8 +45,6 @@ export default function SignUp() {
       passwordConfirmation: "",
     },
   });
-
-
 
   async function onSubmit(data: SignUpFormData) {
     await signUp.email({
@@ -122,11 +106,7 @@ export default function SignUp() {
                     name="lastName"
                     control={control}
                     render={({ field }) => (
-                      <Input
-                        {...field}
-                        placeholder="Doe"
-                        className="pl-9"
-                      />
+                      <Input {...field} placeholder="Doe" className="pl-9" />
                     )}
                   />
                 </div>

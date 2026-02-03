@@ -3,23 +3,15 @@
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
-
 import { AlertOctagon, Loader2, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "@/app/_lib/auth-client";
 import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useState } from "react";
-
-const signInSchema = z.object({
-  email: z.string().min(1, "Email obrigatório").email("Email inválido"),
-  password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
-});
-
-type SignInFormData = z.infer<typeof signInSchema>;
+import { signInSchema, type SignInFormData } from "@/app/_schemas/sign-in-schema";
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
