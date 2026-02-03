@@ -5,6 +5,7 @@ import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
 
 import { AlertOctagon, Loader2, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "@/app/_lib/auth-client";
 import { useForm, Controller } from "react-hook-form";
@@ -57,11 +58,18 @@ export default function SignIn() {
   return (
     <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
       <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
-          <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Login</h1>
+        <div className="mx-auto grid w-[400px] gap-6">
+          <div className="grid gap-2 text-center justify-items-center">
+            <Image
+              src="/logo-1.svg"
+              alt="Logo"
+              width={60}
+              height={60}
+              className="lg:hidden mb-4"
+            />
+            <h1 className="text-3xl font-bold">Acesse sua conta</h1>
             <p className="text-balance text-muted-foreground">
-              Entre com seu email abaixo para acessar sua conta
+              Entre com seu email abaixo para continuar
             </p>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
@@ -94,7 +102,7 @@ export default function SignIn() {
                 <Label htmlFor="password">Senha</Label>
                 <Link
                   href="#"
-                  className="ml-auto inline-block text-sm underline"
+                  className="ml-auto inline-block text-sm underline underline-offset-4 hover:text-primary transition-colors"
                 >
                   Esqueceu sua senha?
                 </Link>
@@ -146,18 +154,41 @@ export default function SignIn() {
           </form>
           <div className="mt-4 text-center text-sm">
             Não tem uma conta?{" "}
-            <Link href="/authentication/sign-up" className="underline">
+            <Link
+              href="/authentication/sign-up"
+              className="underline underline-offset-4 hover:text-primary transition-colors"
+            >
               Cadastre-se
             </Link>
           </div>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block">
-        <div className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale bg-zinc-900 flex items-center justify-center">
-            <div className="text-zinc-100 text-center p-10">
-                 <h2 className="text-4xl font-bold mb-4">Bem-vindo de volta!</h2>
-                 <p className="text-lg text-zinc-400">Gerencie sua agência com eficiência e simplicidade.</p>
-            </div>
+      <div className="hidden lg:block relative bg-primary overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-background/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="h-full w-full flex flex-col items-center justify-center relative z-10 p-12">
+          <div className="mb-8 p-6 bg-background/10 rounded-3xl backdrop-blur-sm border border-background/10 shadow-2xl">
+            <Image
+              src="/logo-transluced.svg"
+              alt="Logo"
+              width={100}
+              height={100}
+              className="drop-shadow-lg"
+            />
+          </div>
+          <div className="text-primary-foreground text-center space-y-4">
+            <h2 className="text-4xl font-bold tracking-tight">
+              Acesse seu painel
+            </h2>
+
+            <p className="text-lg text-primary-foreground/80 max-w-md mx-auto leading-relaxed">
+              Centralize a gestão da sua agência com ferramentas pensadas para
+              produtividade, controle e crescimento.
+            </p>
+            <p className="text-sm text-primary-foreground/80 max-w-md mx-auto leading-relaxed">
+              Acompanhe projetos, solicitações de nossas manutenções, abra novos chamados e seja atendido de forma rápida.
+            </p>
+          </div>
         </div>
       </div>
     </div>

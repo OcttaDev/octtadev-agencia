@@ -1,13 +1,11 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button";
-
 import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
 import {
   AlertOctagon,
   Loader2,
-  X,
   User,
   Mail,
   Lock,
@@ -32,7 +30,6 @@ const signUpSchema = z
     email: z.string().email("Invalid email"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     passwordConfirmation: z.string(),
-    image: z.any().optional(),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
     message: "Passwords do not match",
@@ -60,19 +57,16 @@ export default function SignUp() {
       email: "",
       password: "",
       passwordConfirmation: "",
-      image: undefined,
     },
   });
 
-  const imageFile = watch("image");
-  const imagePreview = imageFile ? URL.createObjectURL(imageFile) : null;
+
 
   async function onSubmit(data: SignUpFormData) {
     await signUp.email({
       email: data.email,
       password: data.password,
       name: `${data.firstName} ${data.lastName}`,
-      image: data.image ? await convertImageToBase64(data.image) : "",
       fetchOptions: {
         onError: (error) => {
           toast.error(error.error.message, {
@@ -99,7 +93,7 @@ export default function SignUp() {
               Preencha os campos abaixo para começar
             </p>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label>Primeiro Nome</Label>
@@ -109,7 +103,7 @@ export default function SignUp() {
                     name="firstName"
                     control={control}
                     render={({ field }) => (
-                      <Input {...field} placeholder="Max" className="pl-9" />
+                      <Input {...field} placeholder="Jhon" className="pl-9" />
                     )}
                   />
                 </div>
@@ -130,7 +124,7 @@ export default function SignUp() {
                     render={({ field }) => (
                       <Input
                         {...field}
-                        placeholder="Robinson"
+                        placeholder="Doe"
                         className="pl-9"
                       />
                     )}
@@ -244,55 +238,6 @@ export default function SignUp() {
               )}
             </div>
 
-            <div className="grid gap-2">
-              <Label>Foto de perfil (opcional)</Label>
-
-              <div className="flex items-center gap-4">
-                {imagePreview ? (
-                  <div className="relative w-16 h-16 shrink-0 overflow-hidden rounded-full border">
-                    <Image
-                      src={imagePreview}
-                      alt="Preview"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-muted border border-dashed">
-                    <ImageIcon className="h-6 w-6 text-muted-foreground" />
-                  </div>
-                )}
-
-                <div className="flex flex-1 items-center gap-2">
-                  <Controller
-                    name="image"
-                    control={control}
-                    render={({ field }) => (
-                      <Input
-                        type="file"
-                        accept="image/*"
-                        className="cursor-pointer file:cursor-pointer"
-                        onChange={(e) =>
-                          field.onChange(e.target.files?.[0] ?? null)
-                        }
-                      />
-                    )}
-                  />
-
-                  {imagePreview && (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setValue("image", undefined)}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </div>
-
             <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? (
                 <Loader2 size={16} className="animate-spin" />
@@ -309,12 +254,34 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block">
-        <div className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale bg-zinc-900 flex items-center justify-center">
-            <div className="text-zinc-100 text-center p-10">
-                 <h2 className="text-4xl font-bold mb-4">Junte-se a nós!</h2>
-                 <p className="text-lg text-zinc-400">Comece hoje mesmo a transformar sua agência.</p>
-            </div>
+      <div className="hidden lg:block relative bg-primary overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-background/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="h-full w-full flex flex-col items-center justify-center relative z-10 p-12">
+          <div className="mb-8 p-6 bg-background/10 rounded-3xl backdrop-blur-sm border border-background/10 shadow-2xl">
+            <Image
+              src="/logo-transluced.svg"
+              alt="Logo"
+              width={100}
+              height={100}
+              className="drop-shadow-lg"
+            />
+          </div>
+          <div className="text-primary-foreground text-center space-y-4">
+            <h2 className="text-4xl font-bold tracking-tight">
+              Junte-se a nós!
+            </h2>
+            <p className="text-lg text-primary-foreground/80 max-w-md mx-auto leading-relaxed">
+              Resolva seus problemas digitais com aplicações altamente
+              escaláveis e performáticas.
+            </p>
+            <p className="text-sm text-zinc-400 mt-4">
+              Projetos reais • Tecnologias modernas • Código escalável
+            </p>
+            <p className="text-sm text-zinc-400 mt-4">
+              +4 anos desenvolvendo soluções digitais para negócios reais
+            </p>
+          </div>
         </div>
       </div>
     </div>
