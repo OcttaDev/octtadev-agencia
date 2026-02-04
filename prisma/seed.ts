@@ -19,6 +19,13 @@ async function main() {
         icon: "Inbox",
         order: 2,
       },
+      {
+        title: "Pagamentos",
+        url: "/lobby/[email]/payments/receiver/[reveiverid]",
+        requiredRule: Rule.CLIENT,
+        icon: "BanknoteArrowUp",
+        order: 3,
+      },
     ],
     skipDuplicates: true,
   });
