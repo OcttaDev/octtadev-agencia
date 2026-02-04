@@ -60,11 +60,11 @@ export function AppSidebar({
               const Icon = iconMap[item.icon ?? ""] || Icons.Circle;
 
               const isActive = pathname.includes(
-                item.url.replace("/lobby/[email]", ""),
+                item.url.replace("/lobby/[id]", ""),
               );
               const realUrl = item.url.replace(
-                "[email]",
-                session?.user?.email ?? "",
+                "[id]",
+                session?.user?.id ?? "",
               );
 
               return (

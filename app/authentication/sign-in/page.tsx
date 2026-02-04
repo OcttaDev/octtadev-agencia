@@ -3,7 +3,15 @@
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
-import { AlertOctagon, Loader2, Mail, Lock, Eye, EyeOff, CheckCircle } from "lucide-react";
+import {
+  AlertOctagon,
+  Loader2,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  CheckCircle,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "@/app/_lib/auth-client";
@@ -11,7 +19,10 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useState } from "react";
-import { signInSchema, type SignInFormData } from "@/app/_schemas/sign-in-schema";
+import {
+  signInSchema,
+  type SignInFormData,
+} from "@/app/_schemas/sign-in-schema";
 import { useRouter } from "next/navigation";
 
 export default function SignIn() {
@@ -41,13 +52,13 @@ export default function SignIn() {
             richColors: true,
           });
         },
-        onSuccess: () => {
-          router.push(`/lobby/${data.email}/history-calls`);
+        onSuccess: (res) => {
           toast.success("Login realizado com sucesso!", {
             icon: <CheckCircle className="w-4 h-4" />,
             position: "top-center",
             richColors: true,
           });
+          window.location.href = `/lobby/${res.data.user.id}/history-calls`;
         },
       },
     });
@@ -184,7 +195,8 @@ export default function SignIn() {
               produtividade, controle e crescimento.
             </p>
             <p className="text-sm text-primary-foreground/80 max-w-md mx-auto leading-relaxed">
-              Acompanhe projetos, solicitações de nossas manutenções, abra novos chamados e seja atendido de forma rápida.
+              Acompanhe projetos, solicitações de nossas manutenções, abra novos
+              chamados e seja atendido de forma rápida.
             </p>
           </div>
         </div>
