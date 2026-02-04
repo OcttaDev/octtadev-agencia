@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/app/_components/ui/button";
 import {
   Card,
@@ -8,6 +10,7 @@ import {
 } from "@/app/_components/ui/card";
 import { Call } from "@/app/generated/prisma/client";
 import { PlusIcon, History, CheckCircle2, Clock, Calendar, Archive, AlertOctagon } from "lucide-react";
+import CreateNewCalled from "./create-new-called";
 
 export default function HistoryCalls({
   calls,
@@ -21,14 +24,8 @@ export default function HistoryCalls({
       <section className="flex flex-col gap-4">
         <header className="flex items-center gap-2">
           <h1 className="font-semibold">Chamados Recentes</h1>
-          {rule === "client" && (
-            <Button
-              variant="outline"
-              size="icon-xs"
-              className="rounded-full cursor-pointer"
-            >
-              <PlusIcon className="w-4 h-4" />
-            </Button>
+          {rule === "CLIENT" && (
+            <CreateNewCalled variant="circle" />
           )}
         </header>
         <div className="flex flex-col gap-2">
@@ -61,10 +58,10 @@ export default function HistoryCalls({
             <div className="flex flex-col items-center justify-center py-8 text-center border rounded-lg border-dashed text-muted-foreground bg-muted/20">
               <History className="h-8 w-8 mb-3 opacity-50" />
               <p className="text-sm font-medium">Não há chamadas recentes</p>
-              <p className="text-xs text-muted-foreground/80 mt-1">
+              <p className="text-xs text-muted-foreground/80 mt-1 mb-4">
                 Suas novas chamadas aparecerão aqui.
               </p>
-              <Button className="mt-4">Abrir chamado</Button>
+              <CreateNewCalled variant="default" />
             </div>
           )}
         </div>
