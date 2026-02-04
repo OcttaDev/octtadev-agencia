@@ -76,7 +76,7 @@ export function AppSidebar({
                      !item.isActive &&
                      "hidden"
                    }
-
+                   mt-2
                    `}
                 >
                   <SidebarMenuButton
