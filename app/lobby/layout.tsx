@@ -34,10 +34,14 @@ export default async function RootLayout({
   return (
     <SidebarProvider>
       <AppSidebar navigationItems={navigationItems} rule={account?.rule!} />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
+
+      <body className="w-full">
+        <header className="bg-muted w-full p-2 fixed sm:hidden">
+          <SidebarTrigger />
+        </header>
+
+        <main className="w-full mt-10 sm:mt-0 px-4 py-6">{children}</main>
+      </body>
     </SidebarProvider>
   );
 }
