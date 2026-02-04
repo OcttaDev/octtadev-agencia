@@ -1,6 +1,7 @@
 import { auth } from "@/app/_lib/auth";
 import prisma from "@/app/_lib/prisma";
 import { headers } from "next/headers";
+import HistoryCalls from "./_components/history-calls";
 
 export default async function Page() {
   const session = await auth.api.getSession({
@@ -13,13 +14,13 @@ export default async function Page() {
     },
     select: {
       rule: true,
+      calls: true,
     },
   });
 
   return (
     <div>
-      {account?.rule === "admin" && <h1>Owner History Calls</h1>}
-      {account?.rule === "client" && <h1>Client History Calls</h1>}
+      <HistoryCalls calls={account?.calls || []} rule={account?.rule || ""} />
     </div>
   );
 }
