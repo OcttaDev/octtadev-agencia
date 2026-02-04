@@ -32,12 +32,31 @@ export default function HistoryCalls({
           )}
         </header>
         <div className="flex flex-col gap-2">
-          {calls.length > 0 ? (
-            calls.map((call) => (
-              <div key={call.id}>
-                <p>{call.description}</p>
-              </div>
-            ))
+          {calls.filter((c) => c.status === "FINISHED").length > 0 ? (
+            calls
+              .filter((c) => c.status === "FINISHED")
+              .sort(
+                (a, b) =>
+                  new Date(b.updatedAt).getTime() -
+                  new Date(a.updatedAt).getTime()
+              )
+              .slice(0, 5)
+              .map((call) => (
+                <div
+                  key={call.id}
+                  className="flex flex-col gap-1 p-3 border rounded-md bg-background/50 hover:bg-muted/50 transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-sm">{call.name}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(call.updatedAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground line-clamp-1">
+                    {call.description}
+                  </p>
+                </div>
+              ))
           ) : (
             <div className="flex flex-col items-center justify-center py-8 text-center border rounded-lg border-dashed text-muted-foreground bg-muted/20">
               <History className="h-8 w-8 mb-3 opacity-50" />
