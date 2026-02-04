@@ -42,7 +42,7 @@ export default function SignIn() {
           });
         },
         onSuccess: () => {
-          router.push(`/lobby/${data.email}/called`);
+          router.push(`/lobby/${data.email}/history-calls`);
           toast.success("Login realizado com sucesso!", {
             icon: <CheckCircle className="w-4 h-4" />,
             position: "top-center",
