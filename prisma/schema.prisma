@@ -53,7 +53,7 @@ model Account {
   idToken               String?
   accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
-  rule                  String    @default("client")
+  rule                  Rule      @default(CLIENT)
   calls                 Call[]    @relation("AccountCalls")
   scope                 String?
   password              String?
@@ -82,7 +82,7 @@ model NavigationItem {
   url          String
   icon         String?
   isActive     Boolean  @default(true)
-  requiredRule String   @default("client")
+  requiredRule Rule     @default(CLIENT)
   order        Int      @default(0)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -90,26 +90,35 @@ model NavigationItem {
   @@map("navigation_items")
 }
 
-enum Rule {
-  CLIENT
-  ADMIN
-}
 
 model Call {
   id               String      @id @default(cuid())
   name             String
   description      String
-  status           String      @default("pending")
+  status           Status      @default(PENDING)
   price            Int         @default(0)
   service_protocol String
   serviceMode      ServiceMode @default(ONLINE)
   attendant        String?
+  attendant_id     String?
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
   accountId        String?
   account          Account?    @relation("AccountCalls", fields: [accountId], references: [id])
 
   @@map("calls")
+}
+
+
+enum Rule {
+  CLIENT
+  ADMIN
+}
+
+enum Status {
+  PENDING
+  FINISHED
+  CANCELLED
 }
 
 enum ServiceMode {
