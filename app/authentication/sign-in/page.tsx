@@ -3,7 +3,7 @@
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
-import { AlertOctagon, Loader2, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { AlertOctagon, Loader2, Mail, Lock, Eye, EyeOff, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "@/app/_lib/auth-client";
@@ -12,10 +12,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useState } from "react";
 import { signInSchema, type SignInFormData } from "@/app/_schemas/sign-in-schema";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -41,7 +42,12 @@ export default function SignIn() {
           });
         },
         onSuccess: () => {
-          toast.success("Login realizado com sucesso!");
+          router.push(`/lobby/${data.email}/called`);
+          toast.success("Login realizado com sucesso!", {
+            icon: <CheckCircle className="w-4 h-4" />,
+            position: "top-center",
+            richColors: true,
+          });
         },
       },
     });

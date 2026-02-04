@@ -12,6 +12,7 @@ import {
   Eye,
   EyeOff,
   Image as ImageIcon,
+  CheckCircle,
 } from "lucide-react";
 import Image from "next/image";
 import { signUp } from "@/app/_lib/auth-client";
@@ -61,7 +62,11 @@ export default function SignUp() {
         },
         onSuccess: () => {
           router.push("/authentication/sign-in");
-          toast.success("Conta criada com sucesso! Faça login.");
+          toast.success("Conta criada com sucesso! Faça login.",{
+            icon: <CheckCircle className="w-4 h-4" />,
+            position: "top-center",
+            richColors: true,
+          });
         },
       },
     });
