@@ -62,6 +62,10 @@ export function AppSidebar({
               const isActive = pathname.includes(
                 item.url.replace("/lobby/[email]", ""),
               );
+              const realUrl = item.url.replace(
+                "[email]",
+                session?.user?.email ?? "",
+              );
 
               return (
                 <SidebarMenuItem
@@ -80,10 +84,9 @@ export function AppSidebar({
                     isActive={isActive}
                     className="data-[active=true]:bg-primary/5 data-[active=true]:text-primary relative"
                   >
-                    <a href={item.url} >
+                    <a href={realUrl}>
                       {isActive && (
-                        <span className="h-[70%] w-2 left-0 rounded-r-sm bg-primary absolute"/>
-                      
+                        <span className="h-[70%] w-2 left-0 rounded-r-sm bg-primary absolute" />
                       )}
                       <Icon className="size-4 ml-2" />
                       {item.title}
