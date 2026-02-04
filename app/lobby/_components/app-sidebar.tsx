@@ -29,7 +29,7 @@ export function AppSidebar({
   const userIdentifier =
     session?.user?.email || session?.user?.name || "default";
 
-  const avatarColor = stringToColor(userIdentifier);
+  const avatarColor = session ? stringToColor(userIdentifier) : "#ccc";
 
   return (
     <Sidebar>
@@ -40,7 +40,7 @@ export function AppSidebar({
               <a href="#">
                 <div
                   style={{ backgroundColor: avatarColor }}
-                  className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
+                  className="text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
                 >
                   {session?.user?.name[0].toUpperCase()}
                 </div>
