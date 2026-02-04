@@ -10,11 +10,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/app/_components/ui/sidebar";
-import {  useSession } from "@/app/_lib/auth-client";
+import { useSession } from "@/app/_lib/auth-client";
 import { stringToColor } from "@/app/_lib/color-generator";
 import { iconMap } from "@/app/_lib/icon-map";
 import { NavigationItem } from "@/app/generated/prisma/client";
 import * as Icons from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function AppSidebar({
   navigationItems,
@@ -24,11 +25,12 @@ export function AppSidebar({
   rule: string | null;
 }) {
   const { data: session } = useSession();
-
+  const pathname = usePathname();
   const userIdentifier =
     session?.user?.email || session?.user?.name || "default";
 
   const avatarColor = stringToColor(userIdentifier);
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -56,6 +58,11 @@ export function AppSidebar({
           <SidebarMenu>
             {navigationItems.map((item) => {
               const Icon = iconMap[item.icon ?? ""] || Icons.Circle;
+
+              const isActive = pathname.includes(
+                item.url.replace("/lobby/[email]", ""),
+              );
+
               return (
                 <SidebarMenuItem
                   key={item.title}
@@ -65,11 +72,20 @@ export function AppSidebar({
                      !item.isActive &&
                      "hidden"
                    }
+
                    `}
                 >
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <Icon className="size-4" />
+                  <SidebarMenuButton
+                    asChild
+                    isActive={isActive}
+                    className="data-[active=true]:bg-primary/5 data-[active=true]:text-primary relative"
+                  >
+                    <a href={item.url} >
+                      {isActive && (
+                        <span className="h-[70%] w-2 left-0 rounded-r-sm bg-primary absolute"/>
+                      
+                      )}
+                      <Icon className="size-4 ml-2" />
                       {item.title}
                     </a>
                   </SidebarMenuButton>

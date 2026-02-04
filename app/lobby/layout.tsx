@@ -9,14 +9,16 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const navigationItems = await prisma.navigationItem.findMany({
-    orderBy: {
-      order: "asc",
-    },
-  });
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const [navigationItems, session] = await Promise.all([
+    prisma.navigationItem.findMany({
+      orderBy: {
+        order: "asc",
+      },
+    }),
+    auth.api.getSession({
+      headers: await headers(),
+    }),
+  ]);
 
   if (!session?.user?.id) return null;
 
