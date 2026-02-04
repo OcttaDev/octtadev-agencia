@@ -74,3 +74,22 @@ model Verification {
   @@index([identifier])
   @@map("verifications")
 }
+
+model NavigationItem {
+  id           String   @id @default(cuid())
+  title        String
+  url          String
+  icon         String?
+  isActive     Boolean  @default(true)
+  requiredRule String   @default("client")
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("navigation_items")
+}
+
+enum Rule {
+  CLIENT
+  ADMIN
+}	

@@ -10,10 +10,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/app/_components/ui/sidebar";
-import { useSession } from "@/app/_lib/auth-client";
+import {  useSession } from "@/app/_lib/auth-client";
 import { stringToColor } from "@/app/_lib/color-generator";
+import { iconMap } from "@/app/_lib/icon-map";
+import { NavigationItem } from "@/app/generated/prisma/client";
+import * as Icons from "lucide-react";
 
-export function AppSidebar() {
+export function AppSidebar({
+  navigationItems,
+  rule,
+}: {
+  navigationItems: NavigationItem[];
+  rule: string | null;
+}) {
   const { data: session } = useSession();
 
   const userIdentifier =
@@ -43,8 +52,32 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup />
-        <SidebarGroup />
+        <SidebarGroup>
+          <SidebarMenu>
+            {navigationItems.map((item) => {
+              const Icon = iconMap[item.icon ?? ""] || Icons.Circle;
+              return (
+                <SidebarMenuItem
+                  key={item.title}
+                  className={`
+                   ${
+                     rule?.toUpperCase() !== item.requiredRule?.toUpperCase() &&
+                     !item.isActive &&
+                     "hidden"
+                   }
+                   `}
+                >
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <Icon className="size-4" />
+                      {item.title}
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
