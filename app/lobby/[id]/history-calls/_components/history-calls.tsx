@@ -15,10 +15,11 @@ import {
   Calendar,
   Archive,
   AlertOctagon,
-  Check,
 } from "lucide-react";
 import CreateNewCalled from "./create-new-called";
 import DetailsCalled from "./details-called";
+import { DataTable } from "@/app/lobby/_components/data-table";
+import { historyCallsColumns } from "@/app/_columns/history-calls-columns";
 
 export default function HistoryCalls({
   calls,
@@ -31,10 +32,12 @@ export default function HistoryCalls({
     <main className="flex flex-col space-y-10">
       <section className="flex flex-col gap-4">
         <header className="flex items-center gap-2">
-          <h1 className="font-semibold">Chamados Recentes</h1>
+          <h1 className="font-bold text-accent-foreground text-xl">
+            Chamados Recentes
+          </h1>
           {rule === "CLIENT" && <CreateNewCalled variant="circle" />}
         </header>
-        <div className="flex gap-2">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
           {calls.filter((c) => c.status === "FINISHED").length > 0 ? (
             calls
               .filter((c) => c.status === "FINISHED")
@@ -59,46 +62,13 @@ export default function HistoryCalls({
       </section>
       <section className="flex flex-col gap-4">
         <header className="flex items-center gap-2">
-          <h1 className="font-semibold">Chamados atendidos</h1>
+          <h1 className="font-bold text-accent-foreground text-xl">
+            Chamados atendidos
+          </h1>
         </header>
         <div className="flex flex-col gap-2">
-          {calls.filter((c) => c.status === "FINISHED").length > 0 ? (
-            calls
-              .filter((c) => c.status === "FINISHED")
-              .map((call) => (
-                <Card key={call.id}>
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-base">{call.name}</CardTitle>
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground bg-secondary px-2 py-1 rounded-full">
-                        <CheckCircle2 className="w-3 h-3 text-green-600" />
-                        <span className="capitalize">{call.status}</span>
-                      </div>
-                    </div>
-                    <CardDescription className="text-xs flex items-center gap-1">
-                      Protocolo: {call.service_protocol}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {call.description}
-                    </p>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground border-t pt-3">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        {new Date(call.createdAt).toLocaleDateString()}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {new Date(call.updatedAt).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
+          {calls.filter((c) => c.status === "FINISHED") ? (
+            <DataTable columns={historyCallsColumns} data={calls} />
           ) : (
             <div className="flex items-center gap-4 py-6 px-4 border border-border/40 rounded-lg bg-background/50 shadow-sm">
               <div className="bg-muted/50 p-3 rounded-full shrink-0">
@@ -118,7 +88,9 @@ export default function HistoryCalls({
       </section>
       <section className="flex flex-col gap-4">
         <header className="flex items-center gap-2">
-          <h1 className="font-semibold">Chamados cancelados</h1>
+          <h1 className="font-bold text-accent-foreground text-xl">
+            Chamados cancelados
+          </h1>
         </header>
         <div className="flex flex-col gap-2">
           {calls.filter((c) => c.status === "CANCELLED").length > 0 ? (
@@ -161,7 +133,7 @@ export default function HistoryCalls({
           ) : (
             <div className="flex items-center gap-4 py-6 px-4 border border-border/40 rounded-lg bg-background/50 shadow-sm">
               <div className="bg-primary/10 p-3 rounded-full shrink-0">
-                <AlertOctagon className="h-6 w-6 text-primary" />
+                <AlertOctagon className="h-6 w-6 text-yellow-700" />
               </div>
               <div className="flex flex-col text-left">
                 <p className="text-sm font-medium text-foreground/90">
