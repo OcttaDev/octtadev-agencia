@@ -19,6 +19,7 @@ import {
   Activity,
   AlignLeft,
 } from "lucide-react";
+import { ReactNode } from "react";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("pt-BR", {
@@ -27,26 +28,36 @@ function formatCurrency(value: number) {
   }).format(value);
 }
 
-export default function DetailsCalled({ call }: { call: Call }) {
+export default function DetailsCalled({
+  call,
+  children,
+}: {
+  call: Call;
+  children?: ReactNode;
+}) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button className="flex flex-col items-start gap-1 border rounded-md bg-card hover:bg-accent/50 transition-all w-60 h-auto p-0 shadow-sm hover:shadow-md group">
-          <div className="flex items-center justify-between bg-primary/10 p-4 rounded-t-md relative h-10 w-full transition-colors group-hover:bg-primary/15">
-            <div className="h-10 w-10 bg-primary rounded-md border-2 border-background absolute top-6 left-4 flex items-center justify-center">
-              <Check className="text-primary-foreground" />
+      {children ? (
+        <DialogTrigger className="hover:underline cursor-pointer text-blue-500 font-medium">
+          {children}
+        </DialogTrigger>
+      ) : (
+        <DialogTrigger asChild>
+          <Button className="flex flex-col items-start gap-1 border rounded-md bg-card hover:bg-accent/50 transition-all lg:w-60 h-auto p-0 shadow-sm hover:shadow-md group">
+            <div className="flex items-center justify-between bg-primary/10 p-4 rounded-t-md relative h-8 w-full transition-colors group-hover:bg-primary/15">
+              <div className="h-10 w-10 bg-primary rounded-md border-2 border-background absolute top-2 left-4 flex items-center justify-center">
+                <Check className="text-primary-foreground" />
+              </div>
             </div>
-          </div>
 
-          <div className="mt-4 p-3">
-            <p className="text-sm font-medium text-foreground line-clamp-1 mb-1">
-              {call.name}
-            </p>
-           
-          </div>
-        </Button>
-      </DialogTrigger>
-
+            <div className="mt-2 p-3">
+              <p className="text-sm font-medium text-foreground line-clamp-1 mb-1">
+                {call.name}
+              </p>
+            </div>
+          </Button>
+        </DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-2xl p-0 gap-0 overflow-hidden">
         <div className="bg-primary/5 p-6 pb-8 border-b">
           <DialogHeader className="mt-3">
@@ -56,8 +67,8 @@ export default function DetailsCalled({ call }: { call: Call }) {
                   call.status === "FINISHED"
                     ? "default"
                     : call.status === "CANCELLED"
-                    ? "destructive"
-                    : "secondary"
+                      ? "destructive"
+                      : "secondary"
                 }
                 className="mb-2"
               >
@@ -73,7 +84,8 @@ export default function DetailsCalled({ call }: { call: Call }) {
             <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
               <Calendar className="w-4 h-4" />
               <span>
-                Aberto em {new Date(call.createdAt).toLocaleDateString("pt-BR")} às{" "}
+                Aberto em {new Date(call.createdAt).toLocaleDateString("pt-BR")}{" "}
+                às{" "}
                 {new Date(call.createdAt).toLocaleTimeString("pt-BR", {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -157,7 +169,10 @@ function InfoCard({
           {label}
         </span>
       </div>
-      <p className="text-base font-semibold text-foreground truncate" title={value}>
+      <p
+        className="text-base font-semibold text-foreground truncate"
+        title={value}
+      >
         {value}
       </p>
     </div>

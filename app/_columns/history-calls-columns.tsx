@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "../_components/ui/badge";
 import { Call } from "../generated/prisma/client";
+import DetailsCalled from "../lobby/[id]/history-calls/_components/details-called";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("pt-BR", {
@@ -14,6 +15,22 @@ function formatDate(value: Date) {
 }
 
 export const historyCallsColumns: ColumnDef<Call>[] = [
+      {
+    accessorKey: "name",
+    header: () => <div className="text-left sm:text-left font-medium">Chamado</div>,
+
+    cell: ({ row }) => (
+      <div className="flex flex-col max-w-[260px] text-left sm:text-left">
+        <span className="truncate">
+          <DetailsCalled call={row.original}>
+            {row.getValue("name")}
+          </DetailsCalled>
+        </span>
+      </div>
+    ),
+
+    size: 260,
+  },
   {
     accessorKey: "service_protocol",
     header: () => <div className="text-left font-medium">Protocolo</div>,
@@ -26,46 +43,35 @@ export const historyCallsColumns: ColumnDef<Call>[] = [
 
     size: 140,
   },
-  {
-    accessorKey: "name",
-    header: () => <div className="text-left font-medium">Chamado</div>,
 
-    cell: ({ row }) => (
-      <div className="flex flex-col max-w-[260px]">
-        <span className=" truncate">{row.getValue("name")}</span>
-      </div>
-    ),
-
-    size: 260,
-  },
 
   {
     accessorKey: "createdAt",
-    header: () => <div className="font-medium">Data</div>,
+    header: () => <div className="font-medium hidden sm:block">Data</div>,
     cell: ({ row }) => {
       const date = new Date(row.getValue("createdAt"));
 
       return (
-        <div className=" text-muted-foreground text-sm">{formatDate(date)}</div>
+        <div className=" text-muted-foreground text-sm hidden sm:block">{formatDate(date)}</div>
       );
     },
   },
   {
     accessorKey: "attendant",
-    header: () => <div className="font-medium">Atendente</div>,
+    header: () => <div className="font-medium hidden lg:block">Atendente</div>,
     cell: ({ row }) => {
       return (
-        <div className=" text-muted-foreground text-sm">{row.getValue("attendant") || "Nenhum"}</div>
+        <div className=" text-muted-foreground text-sm hidden lg:block">{row.getValue("attendant") || "Nenhum"}</div>
       );
     },
   },
 
   {
     accessorKey: "serviceMode",
-    header: () => <div className="text-center font-medium">Modalidade</div>,
+    header: () => <div className="text-center font-medium hidden lg:block">Modalidade</div>,
     cell: ({ row }) => (
       <div className="flex justify-center">
-        <Badge variant="outline" className="text-xs">
+        <Badge variant="outline" className="text-xs hidden lg:block">
           {row.getValue("serviceMode")}
         </Badge>
       </div>
@@ -74,15 +80,16 @@ export const historyCallsColumns: ColumnDef<Call>[] = [
 
   {
     accessorKey: "price",
-    header: () => <div className="text-right font-medium">Valor</div>,
+    header: () => <div className="text-right font-medium hidden lg:block">Valor</div>,
     cell: ({ row }) => {
       const amount = Number(row.getValue("price"));
 
       return (
-        <div className="text-right font-medium tabular-nums">
+        <div className="text-right font-medium tabular-nums hidden lg:block">
           {formatCurrency(amount)}
         </div>
       );
     },
   },
+
 ];
