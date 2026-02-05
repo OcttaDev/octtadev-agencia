@@ -20,6 +20,7 @@ import {
   AlignLeft,
 } from "lucide-react";
 import { ReactNode } from "react";
+import CancelCalledAlertDialog from "./cancel-called-alert-dialog";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("pt-BR", {
@@ -125,18 +126,14 @@ export default function DetailsCalled({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 text-xs text-muted-foreground pt-2">
+          <div className="grid sm:grid-cols-2 gap-4 text-xs text-muted-foreground pt-2">
             <div className="flex items-center gap-2 w-full">
               <Hash className="w-3 h-3" />
               <span>ID: {call.id}</span>
             </div>
-            <div className=" items-center gap-2 justify-end hidden sm:flex">
-              <Calendar className="w-3 h-3" />
-              <span>
-                Atualizado:{" "}
-                {new Date(call.updatedAt).toLocaleDateString("pt-BR")}
-              </span>
-            </div>
+            { call.status === "PENDING" && (
+              <CancelCalledAlertDialog callId={call.id} />
+            )}
           </div>
         </div>
       </DialogContent>
