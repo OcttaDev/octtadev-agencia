@@ -4,6 +4,7 @@ import { auth } from "@/app/_lib/auth";
 import prisma from "@/app/_lib/prisma";
 import { CreateCallFormData } from "@/app/_schemas/create-called-schema";
 import { headers } from "next/headers";
+import { revalidatePath } from "next/cache";
 
 export async function AddNewCalled(data: CreateCallFormData) {
   const session = await auth.api.getSession({
@@ -43,6 +44,7 @@ export async function AddNewCalled(data: CreateCallFormData) {
         account: true,
       },
     });
+    revalidatePath(`/lobby/${session.user.id}/history-calls`);
     return called;
   } catch (error) {
     throw error;

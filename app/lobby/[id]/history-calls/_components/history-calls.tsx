@@ -1,11 +1,7 @@
 "use client";
 
 import { Call } from "@/app/generated/prisma/client";
-import {
-  History,
-  Archive,
-  AlertOctagon,
-} from "lucide-react";
+import { History, Archive, AlertOctagon } from "lucide-react";
 import CreateNewCalled from "./create-new-called";
 import DetailsCalled from "./details-called";
 import { DataTable } from "@/app/lobby/_components/data-table";
@@ -28,9 +24,8 @@ export default function HistoryCalls({
           {rule === "CLIENT" && <CreateNewCalled variant="circle" />}
         </header>
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-          {calls.filter((c) => c.status === "FINISHED").length > 0 ? (
+          {calls.length > 0 ? (
             calls
-              .filter((c) => c.status === "FINISHED")
               .sort(
                 (a, b) =>
                   new Date(b.updatedAt).getTime() -
@@ -58,7 +53,10 @@ export default function HistoryCalls({
         </header>
         <div className="flex flex-col gap-2">
           {calls.filter((c) => c.status === "FINISHED").length > 0 ? (
-            <DataTable columns={historyCallsColumns} data={calls.filter((c) => c.status === "FINISHED")} />
+            <DataTable
+              columns={historyCallsColumns}
+              data={calls.filter((c) => c.status === "FINISHED")}
+            />
           ) : (
             <div className="flex items-center gap-4 py-6 px-4 border border-border/40 rounded-lg bg-background/50 shadow-sm">
               <div className="bg-muted/50 p-3 rounded-full shrink-0">
@@ -84,7 +82,10 @@ export default function HistoryCalls({
         </header>
         <div className="flex flex-col gap-2">
           {calls.filter((c) => c.status === "CANCELLED").length > 0 ? (
-            <DataTable columns={historyCallsColumns} data={calls.filter((c) => c.status === "CANCELLED")} />
+            <DataTable
+              columns={historyCallsColumns}
+              data={calls.filter((c) => c.status === "CANCELLED")}
+            />
           ) : (
             <div className="flex items-center gap-4 py-6 px-4 border border-border/40 rounded-lg bg-background/50 shadow-sm">
               <div className="bg-yellow-700/10 p-3 rounded-full shrink-0">

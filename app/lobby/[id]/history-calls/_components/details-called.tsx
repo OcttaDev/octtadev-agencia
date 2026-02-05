@@ -45,7 +45,9 @@ export default function DetailsCalled({
         <DialogTrigger asChild>
           <Button className="flex flex-col items-start gap-1 border rounded-md bg-card hover:bg-accent/50 transition-all lg:w-60 h-auto p-0 shadow-sm hover:shadow-md group">
             <div className="flex items-center justify-between bg-primary/10 p-4 rounded-t-md relative h-8 w-full transition-colors group-hover:bg-primary/15">
-              <div className="h-10 w-10 bg-primary rounded-md border-2 border-background absolute top-2 left-4 flex items-center justify-center">
+              <div
+                className={`${call.status === "FINISHED" ? " bg-green-600" : call.status === "CANCELLED" ? "bg-red-700" : call.status === "PENDING" && "bg-cyan-700"} h-10 w-10 rounded-md border-2 border-background absolute top-2 left-4 flex items-center justify-center`}
+              >
                 <Check className="text-primary-foreground" />
               </div>
             </div>
@@ -63,14 +65,8 @@ export default function DetailsCalled({
           <DialogHeader className="mt-3">
             <div className="flex items-center justify-between mb-2">
               <Badge
-                variant={
-                  call.status === "FINISHED"
-                    ? "default"
-                    : call.status === "CANCELLED"
-                      ? "destructive"
-                      : "secondary"
-                }
-                className="mb-2"
+               
+                className={`${call.status === "FINISHED" ? "bg-green-600" : call.status === "CANCELLED" ? "bg-red-700" : call.status === "PENDING" && "bg-cyan-700"} text-primary-foreground mb-2`}
               >
                 {call.status}
               </Badge>
