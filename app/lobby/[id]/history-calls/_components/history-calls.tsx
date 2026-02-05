@@ -1,6 +1,5 @@
-"use client"
+"use client";
 
-import { Button } from "@/app/_components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,8 +8,17 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 import { Call } from "@/app/generated/prisma/client";
-import { PlusIcon, History, CheckCircle2, Clock, Calendar, Archive, AlertOctagon } from "lucide-react";
+import {
+  History,
+  CheckCircle2,
+  Clock,
+  Calendar,
+  Archive,
+  AlertOctagon,
+  Check,
+} from "lucide-react";
 import CreateNewCalled from "./create-new-called";
+import DetailsCalled from "./details-called";
 
 export default function HistoryCalls({
   calls,
@@ -24,36 +32,19 @@ export default function HistoryCalls({
       <section className="flex flex-col gap-4">
         <header className="flex items-center gap-2">
           <h1 className="font-semibold">Chamados Recentes</h1>
-          {rule === "CLIENT" && (
-            <CreateNewCalled variant="circle" />
-          )}
+          {rule === "CLIENT" && <CreateNewCalled variant="circle" />}
         </header>
-        <div className="flex flex-col gap-2">
+        <div className="flex gap-2">
           {calls.filter((c) => c.status === "FINISHED").length > 0 ? (
             calls
               .filter((c) => c.status === "FINISHED")
               .sort(
                 (a, b) =>
                   new Date(b.updatedAt).getTime() -
-                  new Date(a.updatedAt).getTime()
+                  new Date(a.updatedAt).getTime(),
               )
               .slice(0, 5)
-              .map((call) => (
-                <div
-                  key={call.id}
-                  className="flex flex-col gap-1 p-3 border rounded-md bg-background/50 hover:bg-muted/50 transition-colors"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium text-sm">{call.name}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {new Date(call.updatedAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <p className="text-xs text-muted-foreground line-clamp-1">
-                    {call.description}
-                  </p>
-                </div>
-              ))
+              .map((call) => <DetailsCalled key={call.id} call={call} />)
           ) : (
             <div className="flex flex-col items-center justify-center py-8 text-center border rounded-lg border-dashed text-muted-foreground bg-muted/20">
               <History className="h-8 w-8 mb-3 opacity-50" />
@@ -125,7 +116,7 @@ export default function HistoryCalls({
           )}
         </div>
       </section>
-            <section className="flex flex-col gap-4">
+      <section className="flex flex-col gap-4">
         <header className="flex items-center gap-2">
           <h1 className="font-semibold">Chamados cancelados</h1>
         </header>
