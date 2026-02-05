@@ -51,14 +51,14 @@ export default function DetailsCalled({
             </div>
 
             <div className="mt-2 p-3">
-              <p className="text-sm font-medium text-foreground line-clamp-1 mb-1">
+              <p className="text-xs sm:text-sm font-medium text-foreground line-clamp-1 mb-1">
                 {call.name}
               </p>
             </div>
           </Button>
         </DialogTrigger>
       )}
-      <DialogContent className="sm:max-w-2xl p-0 gap-0 overflow-hidden">
+      <DialogContent className="sm:max-w-2xl p-0 gap-0 overflow-hidden max-h-[80vh] overflow-y-auto scroll-auto">
         <div className="bg-primary/5 p-6 pb-8 border-b">
           <DialogHeader className="mt-3">
             <div className="flex items-center justify-between mb-2">
@@ -130,11 +130,11 @@ export default function DetailsCalled({
           </div>
 
           <div className="grid grid-cols-2 gap-4 text-xs text-muted-foreground pt-2">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full">
               <Hash className="w-3 h-3" />
               <span>ID: {call.id}</span>
             </div>
-            <div className="flex items-center gap-2 justify-end">
+            <div className=" items-center gap-2 justify-end hidden sm:flex">
               <Calendar className="w-3 h-3" />
               <span>
                 Atualizado:{" "}

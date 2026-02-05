@@ -98,7 +98,7 @@ export default function CreateNewCalled({
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="sm:max-w-md rounded-xl p-6 bg-background shadow-lg">
+        <DialogContent className="sm:max-w-md rounded-xl p-6 bg-background shadow-lg max-h-[80vh]">
           <DialogHeader className="mb-4">
             <DialogTitle className="text-lg font-semibold">
               Novo Chamado

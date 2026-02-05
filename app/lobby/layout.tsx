@@ -45,7 +45,7 @@ export default async function RootLayout({
       <AppSidebar navigationItems={navigationItems} rule={account?.rule!} />
 
       <body className="w-full">
-        <header className="bg-muted w-full p-2 fixed sm:hidden">
+        <header className="bg-muted w-full p-2 fixed md:hidden">
           <SidebarTrigger />
         </header>
 
