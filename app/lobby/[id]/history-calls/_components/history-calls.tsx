@@ -23,7 +23,7 @@ export default function HistoryCalls({
           </h1>
           {rule === "CLIENT" && <CreateNewCalled variant="circle" />}
         </header>
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+        <div className={`${calls.length > 0 && "grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"}  gap-4`}>
           {calls.length > 0 ? (
             calls
               .sort(
@@ -34,7 +34,7 @@ export default function HistoryCalls({
               .slice(0, 5)
               .map((call) => <DetailsCalled key={call.id} call={call} />)
           ) : (
-            <div className="flex flex-col items-center justify-center py-8 text-center border rounded-lg border-dashed text-muted-foreground bg-muted/20">
+            <div className="flex flex-col items-center justify-center py-8 text-center border rounded-lg border-dashed text-muted-foreground bg-muted/20 w-full">
               <History className="h-8 w-8 mb-3 opacity-50" />
               <p className="text-sm font-medium">Não há chamadas recentes</p>
               <p className="text-xs text-muted-foreground/80 mt-1 mb-4">
