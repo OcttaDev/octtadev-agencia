@@ -7,7 +7,7 @@ import DetailsCalled from "./details-called";
 import { DataTable } from "@/app/dashboard/_components/data-table";
 import { historyCallsColumns } from "@/app/_columns/history-calls-columns";
 
-export default function HistoryCalls({
+export default function ClientHistoryCalls({
   calls,
   rule,
 }: {
