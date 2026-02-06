@@ -64,7 +64,7 @@ export function AppSidebar({
               const Icon = iconMap[item.icon ?? ""] || Icons.Circle;
 
               const isActive = pathname.includes(
-                item.url.replace("/lobby/[id]", ""),
+                item.url.replace("/dashboard/lobby/[id]", ""),
               );
               const realUrl = item.url.replace("[id]", session?.user?.id ?? "");
 
@@ -72,9 +72,9 @@ export function AppSidebar({
                 <SidebarMenuItem
                   key={item.title}
                   className={`
+                   ${!item.isActive && "hidden"}
                    ${
-                     rule?.toUpperCase() !== item.requiredRule?.toUpperCase() &&
-                     !item.isActive &&
+                     rule !== item.requiredRule &&
                      "hidden"
                    }
                    mt-2
@@ -99,35 +99,35 @@ export function AppSidebar({
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>  
-          <Button
-            variant="outline"
-            onClick={async () => {
-              await signOut({
-                fetchOptions: {
-                  onError: (error) => {
-                    toast.error(error.error.message, {
-                      icon: <Icons.AlertOctagon className="w-4 h-4" />,
-                      position: "top-center",
-                      richColors: true,
-                    });
-                    router.push("/authentication/sign-in");
-                  },
-                  onSuccess: () => {
-                    toast.success("Login realizado com sucesso!", {
-                      icon: <Icons.CheckCircle className="w-4 h-4" />,
-                      position: "top-center",
-                      richColors: true,
-                    });
-                    router.push("/authentication/sign-in");
-                  },
+      <SidebarFooter>
+        <Button
+          variant="outline"
+          onClick={async () => {
+            await signOut({
+              fetchOptions: {
+                onError: (error) => {
+                  toast.error(error.error.message, {
+                    icon: <Icons.AlertOctagon className="w-4 h-4" />,
+                    position: "top-center",
+                    richColors: true,
+                  });
+                  router.push("/authentication/sign-in");
                 },
-              });
-            }}
-          >
-            <Icons.LogOut className="size-4 ml-2" />
-            Sair
-          </Button>
+                onSuccess: () => {
+                  toast.success("Login realizado com sucesso!", {
+                    icon: <Icons.CheckCircle className="w-4 h-4" />,
+                    position: "top-center",
+                    richColors: true,
+                  });
+                  router.push("/authentication/sign-in");
+                },
+              },
+            });
+          }}
+        >
+          <Icons.LogOut className="size-4 ml-2" />
+          Sair
+        </Button>
       </SidebarFooter>
     </Sidebar>
   );

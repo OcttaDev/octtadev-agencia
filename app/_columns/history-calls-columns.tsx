@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "../_components/ui/badge";
 import { Call } from "../generated/prisma/client";
-import DetailsCalled from "../lobby/[id]/history-calls/_components/details-called";
+import DetailsCalled from "../dashboard/lobby/[id]/history-calls/_components/details-called";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("pt-BR", {

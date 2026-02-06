@@ -24,6 +24,7 @@ import {
   type SignInFormData,
 } from "@/app/_schemas/sign-in-schema";
 
+
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -56,7 +57,7 @@ export default function SignIn() {
             position: "top-center",
             richColors: true,
           });
-          window.location.href = `/lobby/${res.data.user.id}/history-calls`;
+          window.location.href = `/dashboard/`;
         },
       },
     });
