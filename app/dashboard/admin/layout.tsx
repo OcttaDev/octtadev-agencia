@@ -3,7 +3,6 @@ import { SidebarProvider, SidebarTrigger } from "../../_components/ui/sidebar";
 import { auth } from "../../_lib/auth";
 import prisma from "../../_lib/prisma";
 import { AppSidebar } from "../_components/app-sidebar";
-import { Loader } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export default async function RootLayout({
@@ -34,14 +33,6 @@ export default async function RootLayout({
       rule: true,
     },
   });
-
-  if (!session) {
-    return (
-      <div>
-        <Loader className="animate-spin" />
-      </div>
-    );
-  }
 
   return (
     <SidebarProvider>

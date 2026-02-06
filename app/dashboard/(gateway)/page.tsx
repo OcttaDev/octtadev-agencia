@@ -6,13 +6,13 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Loading from "../../loading";
 
-export default async function DashboardLayout() {
+export default async function Gateway() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
   if (!session?.user?.id) {
-    redirect("/auth");
+    redirect("/authentication/sign-in");
   }
 
   const account = await prisma.account.findFirst({
