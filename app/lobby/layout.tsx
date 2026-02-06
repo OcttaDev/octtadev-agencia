@@ -4,6 +4,7 @@ import { auth } from "../_lib/auth";
 import prisma from "../_lib/prisma";
 import { AppSidebar } from "./_components/app-sidebar";
 import { Loader } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export default async function RootLayout({
   children,
@@ -21,7 +22,9 @@ export default async function RootLayout({
     }),
   ]);
 
-  if (!session?.user?.id) return null;
+  if (!session?.user?.id) {
+    return redirect("/authentication/sign-in");
+  }
 
   const account = await prisma.account.findFirst({
     where: {
@@ -32,12 +35,12 @@ export default async function RootLayout({
     },
   });
 
-  if(!session){
+  if (!session) {
     return (
       <div>
         <Loader className="animate-spin" />
       </div>
-    )
+    );
   }
 
   return (
