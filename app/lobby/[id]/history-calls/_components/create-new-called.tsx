@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 import { Button } from "@/app/_components/ui/button";
 import {
@@ -13,8 +13,16 @@ import {
   DialogTrigger,
   DialogPortal,
 } from "@/app/_components/ui/dialog";
+
 import { Input } from "@/app/_components/ui/input";
-import { Label } from "@/app/_components/ui/label";
+
+import {
+  Field,
+  FieldLabel,
+  FieldError,
+  FieldDescription,
+} from "@/app/_components/ui/field";
+
 import {
   Select,
   SelectContent,
@@ -22,12 +30,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/_components/ui/select";
+
 import { ServiceMode } from "@/app/generated/prisma/enums";
+
 import { AlertOctagon, CheckCircle, Loader2, PlusIcon } from "lucide-react";
+
 import {
   CreateCallFormData,
   createCallSchema,
 } from "@/app/_schemas/create-called-schema";
+
 import { AddNewCalled } from "../_server/add_new_called";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -38,40 +50,36 @@ export default function CreateNewCalled({
   variant?: "circle" | "default";
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-    setValue,
-    watch,
-    
-  } = useForm<CreateCallFormData>({
+
+  const form = useForm<CreateCallFormData>({
     resolver: zodResolver(createCallSchema),
-    defaultValues: { serviceMode: ServiceMode.ONLINE },
+    defaultValues: {
+      serviceMode: ServiceMode.ONLINE,
+      name: "",
+      description: "",
+    },
   });
 
-  const onSubmit = async (data: CreateCallFormData) => {
-
+  async function onSubmit(data: CreateCallFormData) {
     try {
       await AddNewCalled(data);
-      toast.success("Chamado aberto com sucesso, aguarde o contato!", {
+
+      toast.success("Chamado aberto com sucesso!", {
         icon: <CheckCircle className="w-4 h-4" />,
         position: "top-center",
         richColors: true,
       });
-      reset();
-    } catch (error) {
-      toast.error("Erro ao abrir chamado, tente novamente!", {
+
+      form.reset();
+      setIsOpen(false);
+    } catch {
+      toast.error("Erro ao abrir chamado!", {
         icon: <AlertOctagon className="w-4 h-4" />,
         position: "top-center",
         richColors: true,
       });
-      reset();
-    } finally {
-      setIsOpen(false);
     }
-  };
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -81,114 +89,130 @@ export default function CreateNewCalled({
             variant="outline"
             size="icon-xs"
             className="rounded-full"
-            disabled={isSubmitting}
-            onClick={() => setIsOpen(!isOpen)}
           >
             <PlusIcon className="w-4 h-4" />
           </Button>
         ) : (
-          <Button
-            className="cursor-pointer"
-            disabled={isSubmitting}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            Abrir chamado
-          </Button>
+          <Button>Abrir chamado</Button>
         )}
       </DialogTrigger>
 
       <DialogPortal>
-        <DialogContent className="sm:max-w-md rounded-xl p-6 bg-background shadow-lg max-h-[80vh]">
-          <DialogHeader className="mb-4">
-            <DialogTitle className="text-lg font-semibold">
-              Novo Chamado
-            </DialogTitle>
-            <DialogDescription className="text-sm text-muted-foreground">
-              Preencha os dados abaixo para abrir seu chamado. Um de nossos
-              técnicos iniciará o atendimento em breve.
+        <DialogContent className="sm:max-w-md rounded-xl p-6 max-h-[80vh]">
+          <DialogHeader>
+            <DialogTitle>Novo Chamado</DialogTitle>
+
+            <DialogDescription>
+              Preencha os dados para abrir um chamado.
             </DialogDescription>
           </DialogHeader>
 
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-4"
           >
             {/* Nome */}
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="name" className="text-sm font-medium">
-                Nome do Chamado
-              </Label>
-              <Input
-                id="name"
-                placeholder="Ex: Problema com impressora"
-                {...register("name")}
-                className="border border-border focus:border-primary focus:ring-1 focus:ring-primary"
-              />
-              {errors.name && (
-                <p className="text-xs text-red-500">{errors.name.message}</p>
+            <Controller
+              name="name"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Nome do Chamado
+                  </FieldLabel>
+
+                  <Input
+                    {...field}
+                    id={field.name}
+                    placeholder="Ex: Problema com impressora"
+                    aria-invalid={fieldState.invalid}
+                  />
+
+                  <FieldDescription>
+                    Um título curto para o chamado.
+                  </FieldDescription>
+
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </div>
+            />
 
             {/* Descrição */}
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="description" className="text-sm font-medium">
-                Descrição
-              </Label>
-              <Input
-                id="description"
-                placeholder="Detalhe o problema ou solicitação"
-                {...register("description")}
-                className="border border-border focus:border-primary focus:ring-1 focus:ring-primary"
-              />
-              {errors.description && (
-                <p className="text-xs text-red-500">
-                  {errors.description.message}
-                </p>
-              )}
-            </div>
+            <Controller
+              name="description"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Descrição
+                  </FieldLabel>
 
-            {/* Tipo de Atendimento */}
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="serviceMode" className="text-sm font-medium">
-                Tipo de Atendimento
-              </Label>
-              <Select
-                value={watch("serviceMode")}
-                onValueChange={(val) =>
-                  setValue("serviceMode", val as ServiceMode)
-                }
-              >
-                <SelectTrigger className="border border-border focus:border-primary focus:ring-1 focus:ring-primary w-full">
-                  <SelectValue placeholder="Selecione o tipo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value={ServiceMode.LOCAL}>Local</SelectItem>
-                  <SelectItem value={ServiceMode.ONLINE}>Online</SelectItem>
-                </SelectContent>
-              </Select>
-              {errors.serviceMode && (
-                <p className="text-xs text-red-500">
-                  {errors.serviceMode.message}
-                </p>
-              )}
-            </div>
+                  <Input
+                    {...field}
+                    id={field.name}
+                    placeholder="Detalhe o problema ou solicitação"
+                    aria-invalid={fieldState.invalid}
+                  />
 
-        
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            {/* Tipo Atendimento */}
+            <Controller
+              name="serviceMode"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Tipo de Atendimento</FieldLabel>
+
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger aria-invalid={fieldState.invalid}>
+                      <SelectValue placeholder="Selecione" />
+                    </SelectTrigger>
+
+                    <SelectContent>
+                      <SelectItem value={ServiceMode.LOCAL}>
+                        Local
+                      </SelectItem>
+                      <SelectItem value={ServiceMode.ONLINE}>
+                        Online
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <FieldDescription>
+                    Escolha como deseja ser atendido.
+                  </FieldDescription>
+
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
             <Button
               type="submit"
-              className="mt-2"
-              disabled={isSubmitting}
+              disabled={form.formState.isSubmitting || !form.formState.isValid}
             >
-              {isSubmitting ? (
+              {form.formState.isSubmitting ? (
                 <Loader2 size={16} className="animate-spin" />
               ) : (
                 "Abrir Chamado"
               )}
             </Button>
 
-            {/* Mensagem informativa */}
-            <p className="text-xs text-muted-foreground mt-2 text-center">
-              Obrigado! Em breve, um de nossos técnicos iniciará o atendimento.
+            <p className="text-xs text-muted-foreground text-center">
+              Um técnico iniciará o atendimento em breve.
             </p>
           </form>
         </DialogContent>

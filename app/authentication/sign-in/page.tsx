@@ -23,11 +23,9 @@ import {
   signInSchema,
   type SignInFormData,
 } from "@/app/_schemas/sign-in-schema";
-import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
   const {
     control,
     handleSubmit,
