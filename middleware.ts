@@ -6,9 +6,9 @@ export function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith("/lobby") && !session_token) {
-    return redirect("/authentication/sign-in");
-  }
+  // if (pathname.startsWith("/lobby") && !session_token) {
+  //   return redirect("/authentication/sign-in");
+  // }
 
   return NextResponse.next();
 }
