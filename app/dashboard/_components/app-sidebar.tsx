@@ -70,7 +70,7 @@ export function AppSidebar({
 
               return (
                 <SidebarMenuItem
-                  key={item.title}
+                  key={item.id}
                   className={`
                    ${!item.isActive && "hidden"}
                    ${

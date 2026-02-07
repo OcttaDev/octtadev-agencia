@@ -1,7 +1,16 @@
-export default function OpenCallsPage() {
+import prisma from "@/app/_lib/prisma";
+import OpenCalls from "./_components/open-calls";
+
+export default async function OpenCallsPage() {
+  const calls = await prisma.call.findMany({
+    where: {
+      status: "PENDING",
+    },
+  });
+
   return (
     <div>
-      <h1>Open Calls</h1>
+      <OpenCalls calls={calls} />
     </div>
   );
 }
