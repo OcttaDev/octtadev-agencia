@@ -17,7 +17,7 @@ export default function CardItem({ card }: { card: Call }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-white p-3 rounded shadow mb-2 cursor-grab"
+      className="bg-white p-3 rounded-md border-l-2 border-primary shadow mb-2 cursor-grab "
     >
       {card.name}
     </div>

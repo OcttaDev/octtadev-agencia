@@ -1,7 +1,7 @@
 import { Call } from "@/app/generated/prisma/client";
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import CardItem from "./card-item";
+import CardItem from "./kanban-card-item";
 
 export default function CardColumn({
   id,
