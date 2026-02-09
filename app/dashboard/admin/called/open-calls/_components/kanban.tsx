@@ -4,12 +4,13 @@ import { arrayMove } from "@dnd-kit/sortable";
 import KanbanCardColumn from "./kanban-card-column";
 import { CallWithAccountUser } from "@/app/_types/call-with-account-user";
 
-type CallStatus = "Pendentes" | "Concluidos" | "Cancelados";
+type CallStatus = "Pendentes" | "Em Progresso" | "Concluidos" | "Cancelados";
 type ColumnsType = Record<CallStatus, CallWithAccountUser[]>;
 
 function groupCalls(calls: CallWithAccountUser[]): ColumnsType {
   return {
     Pendentes: calls.filter((c) => c.status === "PENDING"),
+    "Em Progresso": calls.filter((c) => c.status === "IN_PROGRESS"),
     Concluidos: calls.filter((c) => c.status === "FINISHED"),
     Cancelados: calls.filter((c) => c.status === "CANCELLED"),
   };
@@ -65,7 +66,10 @@ export default function Kanban({ calls }: { calls: CallWithAccountUser[] }) {
   return (
     <main className="w-full h-[calc(100dvh-160px)] overflow-hidden @container">
       <div className="w-full h-full overflow-x-auto overflow-y-hidden">
-        <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
+        <DndContext
+          collisionDetection={closestCorners}
+          onDragEnd={handleDragEnd}
+        >
           <div className="flex gap-4 px-4 pb-4 w-max">
             {(Object.keys(columns) as CallStatus[]).map((columnId) => (
               <KanbanCardColumn
@@ -80,4 +84,3 @@ export default function Kanban({ calls }: { calls: CallWithAccountUser[] }) {
     </main>
   );
 }
-

@@ -116,6 +116,7 @@ enum Rule {
 
 enum Status {
   PENDING
+  IN_PROGRESS
   FINISHED
   CANCELLED
 }
