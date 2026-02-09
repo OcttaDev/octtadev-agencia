@@ -17,10 +17,10 @@ const columnMap: Record<string, { label: string; color: string }> = {
 
 export default function KanbanCardColumn({
   id,
-  cards,
+  calls,
 }: {
   id: string;
-  cards: CallWithAccountUser[];
+  calls: CallWithAccountUser[];
 }) {
   const { setNodeRef } = useDroppable({ id });
 
@@ -62,22 +62,22 @@ export default function KanbanCardColumn({
         </div>
 
         <Badge variant="secondary" className="text-xs font-mono shrink-0">
-          {cards.length}
+          {calls.length}
         </Badge>
       </div>
 
       {/* CARDS */}
       <ScrollArea className="flex-1 px-3 py-3">
         <SortableContext
-          items={cards.map((card) => card.id)}
+          items={calls.map((call) => call.id)}
           strategy={verticalListSortingStrategy}
         >
           <div className="flex flex-col gap-3">
-            {cards.map((card) => (
-              <KanbanCardItem key={card.id} card={card} />
+            {calls.map((call) => (
+              <KanbanCardItem key={call.id} call={call} />
             ))}
 
-            {cards.length === 0 && (
+            {calls.length === 0 && (
               <div className="flex items-center justify-center h-24 border-2 border-dashed rounded-lg text-xs text-muted-foreground">
                 Sem chamados
               </div>

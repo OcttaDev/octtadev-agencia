@@ -71,7 +71,7 @@ export default function Kanban({ calls }: { calls: CallWithAccountUser[] }) {
               <KanbanCardColumn
                 key={columnId}
                 id={columnId}
-                cards={columns[columnId]}
+                calls={columns[columnId]}
               />
             ))}
           </div>

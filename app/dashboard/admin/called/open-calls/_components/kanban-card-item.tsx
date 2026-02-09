@@ -12,7 +12,7 @@ import {
   AvatarImage,
 } from "@/app/_components/ui/avatar";
 
-export default function KanbanCardItem({ card }: { card: CallWithAccountUser }) {
+export default function KanbanCardItem({ call }: { call: CallWithAccountUser }) {
   const {
     attributes,
     listeners,
@@ -20,7 +20,7 @@ export default function KanbanCardItem({ card }: { card: CallWithAccountUser }) 
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: card.id });
+  } = useSortable({ id: call.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -31,7 +31,7 @@ export default function KanbanCardItem({ card }: { card: CallWithAccountUser }) 
   const formattedPrice = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
-  }).format(Number(card.price));
+  }).format(Number(call.price));
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
@@ -39,13 +39,13 @@ export default function KanbanCardItem({ card }: { card: CallWithAccountUser }) 
         <CardContent className="p-3 space-y-2 text-xs">
           
           <p className="font-medium text-foreground line-clamp-2">
-            {card.name}
+            {call.name}
           </p>
 
           <p className="text-muted-foreground">{formattedPrice}</p>
 
           <p className="text-muted-foreground">
-            {new Date(card.createdAt).toLocaleDateString("pt-BR")}
+            {new Date(call.createdAt).toLocaleDateString("pt-BR")}
           </p>
 
           <div className="space-y-1">
@@ -54,28 +54,28 @@ export default function KanbanCardItem({ card }: { card: CallWithAccountUser }) 
             </span>
 
             <p className="truncate">
-              {new Date(card.updatedAt).toLocaleDateString("pt-BR")}
+              {new Date(call.updatedAt).toLocaleDateString("pt-BR")}
             </p>
           </div>
 
           {/* RESPONSÁVEL */}
           <div className="flex items-center gap-2 pt-2 border-t">
             <Avatar className="w-6 h-6 shrink-0">
-              <AvatarImage src={card.account?.user.image ?? ""} />
+              <AvatarImage src={call.account?.user.image ?? ""} />
               <AvatarFallback>
-                {card?.account?.user?.name?.[0]?.toUpperCase()}
+                {call?.account?.user?.name?.[0]?.toUpperCase()}
               </AvatarFallback>
             </Avatar>
 
             <span className="truncate">
-              {card.account?.user.name}
+              {call.account?.user.name}
             </span>
           </div>
 
-          {card.attendant && (
+          {call.attendant && (
             <div className="flex items-center gap-1 pt-2 border-t">
               <User2 className="w-3 h-3 shrink-0" />
-              <span className="truncate">{card.attendant}</span>
+              <span className="truncate">{call.attendant}</span>
             </div>
           )}
         </CardContent>
