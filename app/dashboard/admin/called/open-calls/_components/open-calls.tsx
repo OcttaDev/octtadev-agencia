@@ -12,6 +12,8 @@ import { useState } from "react";
 import { Search, Table2, ListFilter, SquareDashedKanban } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import Kanban from "./kanban";
+import { DataTable } from "@/app/dashboard/_components/data-table";
+import { historyCallsColumnsForAdmin } from "@/app/_columns/history-calls-columns-for-admin";
 
 export default function OpenCalls({ calls }: { calls: CallWithAccountUser[] }) {
   const [filter, setFilter] = useState("");
@@ -67,8 +69,8 @@ export default function OpenCalls({ calls }: { calls: CallWithAccountUser[] }) {
               </div>
             </TabsContent>
             <TabsContent value="table" className="m-0 p-4">
-              <div className="flex items-center justify-center h-64 text-muted-foreground border-2 border-dashed rounded-md">
-                Tabela View (Em construção)
+              <div>
+               <DataTable data={calls} columns={historyCallsColumnsForAdmin} />
               </div>
             </TabsContent>
           </div>
