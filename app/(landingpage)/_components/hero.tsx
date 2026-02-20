@@ -49,7 +49,7 @@ export default function Hero() {
           className="mt-10 flex flex-wrap items-center justify-center gap-4"
         >
           <Link
-            href="#contato"
+            href="/authentication/sign-up"
             className="inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
           >
             Solicitar Diagnostico

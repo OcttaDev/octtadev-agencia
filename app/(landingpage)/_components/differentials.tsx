@@ -1,7 +1,8 @@
 "use client"
 
-import { ArrowRight, Link, Rocket } from "lucide-react";
+import { ArrowRight, Rocket } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Differentials() {
   return (
@@ -32,7 +33,7 @@ export default function Differentials() {
 
           <div className="mt-10">
             <Link
-              href="#contato"
+              href="/authentication/sign-up"
               className="inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
               Quero Desenvolver Minha Solução
