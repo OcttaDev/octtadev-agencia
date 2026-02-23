@@ -67,11 +67,11 @@ export default function SignIn() {
     <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[400px] gap-6">
-          <div className="grid gap-2 text-center justify-items-center">
+          <div className="grid gap-2 text-center justify-items-center mt-20">
             <Image
-              src="/logo-1.svg"
+              src="/logo-transluced.svg"
               alt="Logo"
-              width={60}
+              width={150}
               height={60}
               className="lg:hidden mb-4"
             />

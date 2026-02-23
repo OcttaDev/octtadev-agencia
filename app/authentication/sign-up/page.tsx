@@ -62,7 +62,7 @@ export default function SignUp() {
         },
         onSuccess: () => {
           router.push("/authentication/sign-in");
-          toast.success("Conta criada com sucesso! Faça login.",{
+          toast.success("Conta criada com sucesso! Faça login.", {
             icon: <CheckCircle className="w-4 h-4" />,
             position: "top-center",
             richColors: true,
@@ -75,8 +75,15 @@ export default function SignUp() {
   return (
     <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
       <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[450px] gap-6 px-4">
-          <div className="grid gap-2 text-center">
+        <div className="mx-auto grid w-[450px] gap-6 px-4 ">
+          <div className="grid gap-2 text-center justify-items-center mt-10 mb-5">
+            <Image
+              src="/logo-transluced.svg"
+              alt="Logo"
+              width={150}
+              height={60}
+              className="lg:hidden "
+            />
             <h1 className="text-3xl font-bold">Crie sua conta</h1>
             <p className="text-balance text-muted-foreground">
               Preencha os campos abaixo para começar
