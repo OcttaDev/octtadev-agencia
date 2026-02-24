@@ -9,7 +9,7 @@ import {
 import { Badge } from "@/app/_components/ui/badge";
 import { Separator } from "@/app/_components/ui/separator";
 
-import { Call } from "@/app/generated/prisma/client";
+import { Call, Prisma } from "@/app/generated/prisma/client";
 import {
   Check,
   Calendar,
@@ -21,19 +21,17 @@ import {
 } from "lucide-react";
 import { ReactNode } from "react";
 import CancelCalledAlertDialog from "./cancel-called-alert-dialog";
+import { formatCurrency } from "@/app/_lib/format-currency";
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(value);
-}
+type CallWithPayment = Prisma.CallGetPayload<{
+  include: { payment: true }
+}>;
 
 export default function DetailsCalled({
   call,
   children,
 }: {
-  call: Call;
+  call: CallWithPayment;
   children?: ReactNode;
 }) {
   return (
@@ -97,7 +95,7 @@ export default function DetailsCalled({
             <InfoCard
               icon={BadgeDollarSign}
               label="Valor Total"
-              value={formatCurrency(Number(call.price))}
+              value={formatCurrency(Number(call?.payment?.price || 0))}
               className="bg-green-50/50 dark:bg-green-900/10 border-green-100 dark:border-green-900/20"
             />
             <InfoCard

@@ -31,7 +31,7 @@ export default function KanbanCardItem({ call }: { call: CallWithAccountUser }) 
   const formattedPrice = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
-  }).format(Number(call.price));
+  }).format(Number(call.payment?.price));
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>

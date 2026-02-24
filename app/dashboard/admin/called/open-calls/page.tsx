@@ -8,6 +8,7 @@ export default async function OpenCallsPage() {
       status: "PENDING",
     },
     include: {
+      payment: true,
       account: {
         include: {
           user: true,

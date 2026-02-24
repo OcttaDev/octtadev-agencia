@@ -17,7 +17,10 @@ export default async function Page() {
       calls: {
         where: {
           status: Status.PENDING,
-        }
+        },
+        include: {
+          payment: true,
+        },
       }
     },
   });

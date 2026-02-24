@@ -6,6 +6,7 @@ import { Call } from "@/app/generated/prisma/client";
 import { Archive } from "lucide-react";
 import CreateNewCalled from "../../_components/create-new-called";
 
+
 export default function ClientOpenCalls({ calls }: { calls: Call[] }) {
   return (
     <main className="flex flex-col space-y-10">

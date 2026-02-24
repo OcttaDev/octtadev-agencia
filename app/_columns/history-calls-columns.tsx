@@ -1,9 +1,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "../_components/ui/badge";
-import { Call } from "../generated/prisma/client";
+import { Call, Prisma } from "../generated/prisma/client";
 import DetailsCalled from "../dashboard/lobby/[id]/_components/details-called";
 import { formatDate } from "../_lib/format-date";
 import { formatCurrency } from "../_lib/format-currency";
+import { CallWithPayment } from "../_types/call-with-payment";
+
 
 export const historyCallsColumns: ColumnDef<Call>[] = [
   {
@@ -15,7 +17,7 @@ export const historyCallsColumns: ColumnDef<Call>[] = [
     cell: ({ row }) => (
       <div className="flex flex-col max-w-[260px] text-left sm:text-left">
         <span className="truncate">
-          <DetailsCalled call={row.original}>
+          <DetailsCalled call={row.original as CallWithPayment}>
             {row.getValue("name")}
           </DetailsCalled>
         </span>

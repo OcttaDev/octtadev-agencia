@@ -6,6 +6,7 @@ import CreateNewCalled from "../../_components/create-new-called";
 import DetailsCalled from "../../_components/details-called";
 import { DataTable } from "@/app/dashboard/_components/data-table";
 import { historyCallsColumns } from "@/app/_columns/history-calls-columns";
+import { CallWithPayment } from "@/app/_types/call-with-payment";
 
 export default function ClientHistoryCalls({
   calls,
@@ -32,7 +33,7 @@ export default function ClientHistoryCalls({
                   new Date(a.updatedAt).getTime(),
               )
               .slice(0, 5)
-              .map((call) => <DetailsCalled key={call.id} call={call} />)
+              .map((call) => <DetailsCalled key={call.id} call={call as CallWithPayment} />)
           ) : (
             <div className="flex flex-col items-center justify-center py-8 text-center border rounded-lg border-dashed text-muted-foreground bg-muted/20 w-full">
               <History className="h-8 w-8 mb-3 opacity-50" />

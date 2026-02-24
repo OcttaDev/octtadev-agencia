@@ -13,7 +13,12 @@ export default async function Page() {
       userId: session?.user.id,
     },
     select: {
-      calls: true,
+      calls: {
+        include: {
+          payment: true,
+        },  
+      },
+
     },
   });
 
