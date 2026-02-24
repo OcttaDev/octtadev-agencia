@@ -13,14 +13,13 @@ export default async function Page() {
       userId: session?.user.id,
     },
     select: {
-      rule: true,
       calls: true,
     },
   });
 
   return (
     <div>
-      <ClientHistoryCalls calls={account?.calls || []} rule={account?.rule || ""} />
+      <ClientHistoryCalls calls={account?.calls || []} />
     </div>
   );
 }

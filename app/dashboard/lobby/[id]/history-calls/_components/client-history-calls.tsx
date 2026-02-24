@@ -9,10 +9,10 @@ import { historyCallsColumns } from "@/app/_columns/history-calls-columns";
 
 export default function ClientHistoryCalls({
   calls,
-  rule,
+  
 }: {
   calls: Call[];
-  rule: string;
+  
 }) {
   return (
     <main className="flex flex-col space-y-10">
@@ -21,7 +21,7 @@ export default function ClientHistoryCalls({
           <h1 className="font-bold text-accent-foreground text-xl">
             Chamados Recentes
           </h1>
-          {rule === "CLIENT" && <CreateNewCalled variant="circle" />}
+          <CreateNewCalled variant="circle" />
         </header>
         <div className={`${calls.length > 0 && "grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"}  gap-4`}>
           {calls.length > 0 ? (
