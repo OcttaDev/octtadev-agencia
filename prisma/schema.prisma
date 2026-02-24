@@ -95,8 +95,6 @@ model Call {
   name                    String
   description             String
   status                  Status      @default(PENDING)
-  price                   Int         @default(0)
-  is_paid                 Boolean     @default(false)
   service_protocol        String
   serviceMode             ServiceMode @default(ONLINE)
   attendant               String?
@@ -106,8 +104,19 @@ model Call {
   updatedAt               DateTime    @updatedAt
   accountId               String?
   account                 Account?    @relation("AccountCalls", fields: [accountId], references: [id])
+  payment                 Payment?
 
   @@map("calls")
+}
+
+model Payment {
+  id      String  @id @default(cuid())
+  price   Int     @default(0)
+  is_paid Boolean @default(false)
+  callId  String  @unique
+  call    Call    @relation(fields: [callId], references: [id])
+
+  @@map("payments")
 }
 
 enum Rule {
