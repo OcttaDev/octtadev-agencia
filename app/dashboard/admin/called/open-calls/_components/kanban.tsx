@@ -65,7 +65,13 @@ export default function Kanban({ calls }: { calls: CallWithAccountUser[] }) {
 
   return (
     <main className="w-full h-[calc(100dvh-160px)] overflow-hidden @container">
-      <div className="w-full h-full overflow-x-auto overflow-y-hidden">
+      <div
+        className="w-full h-full overflow-x-auto overflow-y-hidden"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none"
+        }}
+      >
         <DndContext
           collisionDetection={closestCorners}
           onDragEnd={handleDragEnd}
