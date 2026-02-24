@@ -22,7 +22,7 @@ import {
 
 import { Textarea } from "@/app/_components/ui/textarea";
 
-import { CancelCalled } from "../history-calls/_server/cancel-called";
+import { CancelCalled } from "../_server/cancel-called";
 import { toast } from "sonner";
 import { AlertOctagon, CheckCircle, Loader2 } from "lucide-react";
 import { useState } from "react";

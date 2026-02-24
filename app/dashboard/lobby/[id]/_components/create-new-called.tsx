@@ -40,7 +40,7 @@ import {
   createCallSchema,
 } from "@/app/_schemas/create-called-schema";
 
-import { AddNewCalled } from "../history-calls/_server/add_new_called";
+import { AddNewCalled } from "../_server/add_new_called";
 import { toast } from "sonner";
 import { useState } from "react";
 
