@@ -83,11 +83,12 @@ export const historyCallsColumnsForAdmin: ColumnDef<Call>[] = [
       <div className="text-right font-medium hidden lg:block">Valor</div>
     ),
     cell: ({ row }) => {
-      const amount = Number(row.getValue("price"));
+     const amount = Number((row.original as CallWithPayment).payment?.price || 0);
+      const price = formatCurrency(amount);
 
       return (
         <div className="text-right font-medium tabular-nums hidden lg:block">
-          {formatCurrency(amount)}
+          {price}
         </div>
       );
     },

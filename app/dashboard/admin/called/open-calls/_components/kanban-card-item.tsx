@@ -11,6 +11,8 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/app/_components/ui/avatar";
+import { formatCurrency } from "@/app/_lib/format-currency";
+import { CallWithPayment } from "@/app/_types/call-with-payment";
 
 export default function KanbanCardItem({ call }: { call: CallWithAccountUser }) {
   const {
@@ -28,10 +30,7 @@ export default function KanbanCardItem({ call }: { call: CallWithAccountUser }) 
     opacity: isDragging ? 0.5 : 1,
   };
 
-  const formattedPrice = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(Number(call.payment?.price));
+
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
@@ -42,7 +41,9 @@ export default function KanbanCardItem({ call }: { call: CallWithAccountUser }) 
             {call.name}
           </p>
 
-          <p className="text-muted-foreground">{formattedPrice}</p>
+          <p className="text-muted-foreground">
+            {formatCurrency(Number((call as CallWithPayment).payment?.price || 0))}
+          </p>
 
           <p className="text-muted-foreground">
             {new Date(call.createdAt).toLocaleDateString("pt-BR")}
@@ -58,7 +59,6 @@ export default function KanbanCardItem({ call }: { call: CallWithAccountUser }) 
             </p>
           </div>
 
-          {/* RESPONSÁVEL */}
           <div className="flex items-center gap-2 pt-2 border-t">
             <Avatar className="w-6 h-6 shrink-0">
               <AvatarImage src={call.account?.user.image ?? ""} />
