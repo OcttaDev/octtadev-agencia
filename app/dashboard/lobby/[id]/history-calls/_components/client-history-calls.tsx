@@ -2,8 +2,8 @@
 
 import { Call } from "@/app/generated/prisma/client";
 import { History, Archive, AlertOctagon } from "lucide-react";
-import CreateNewCalled from "./create-new-called";
-import DetailsCalled from "./details-called";
+import CreateNewCalled from "../../_components/create-new-called";
+import DetailsCalled from "../../_components/details-called";
 import { DataTable } from "@/app/dashboard/_components/data-table";
 import { historyCallsColumns } from "@/app/_columns/history-calls-columns";
 

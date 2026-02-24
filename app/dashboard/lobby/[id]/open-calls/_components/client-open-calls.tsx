@@ -4,7 +4,7 @@ import { historyCallsColumns } from "@/app/_columns/history-calls-columns";
 import { DataTable } from "@/app/dashboard/_components/data-table";
 import { Call } from "@/app/generated/prisma/client";
 import { Archive } from "lucide-react";
-import CreateNewCalled from "../../history-calls/_components/create-new-called";
+import CreateNewCalled from "../../_components/create-new-called";
 
 export default function ClientOpenCalls({ calls }: { calls: Call[] }) {
   return (

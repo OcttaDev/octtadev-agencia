@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Call } from "../generated/prisma/client";
 import { Badge } from "../_components/ui/badge";
 import { formatCurrency } from "../_lib/format-currency";
-import DetailsCalled from "../dashboard/lobby/[id]/history-calls/_components/details-called";
+import DetailsCalled from "../dashboard/lobby/[id]/_components/details-called";
 import { formatDate } from "../_lib/format-date";
 
 export const historyCallsColumnsForAdmin: ColumnDef<Call>[] = [
