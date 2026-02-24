@@ -9,7 +9,7 @@ import {
 import { Badge } from "@/app/_components/ui/badge";
 import { Separator } from "@/app/_components/ui/separator";
 
-import { Call, Prisma } from "@/app/generated/prisma/client";
+import { Prisma } from "@/app/generated/prisma/client";
 import {
   Check,
   Calendar,
@@ -18,6 +18,7 @@ import {
   Hash,
   Activity,
   AlignLeft,
+  LucideIcon,
 } from "lucide-react";
 import { ReactNode } from "react";
 import CancelCalledAlertDialog from "./cancel-called-alert-dialog";
@@ -139,20 +140,20 @@ export default function DetailsCalled({
   );
 }
 
-function InfoCard({
+export function InfoCard({
   icon: Icon,
   label,
   value,
   className,
 }: {
-  icon: any;
+  icon: LucideIcon;
   label: string;
   value: string;
   className?: string;
 }) {
   return (
     <div
-      className={`flex flex-col gap-2 p-4 rounded-xl border transition-all hover:shadow-sm ${className}`}
+      className={`flex flex-col gap-2 p-4 rounded-xl border transition-all hover:shadow-sm ${className ?? ""}`}
     >
       <div className="flex items-center gap-2 text-muted-foreground">
         <Icon className="w-4 h-4" />
@@ -161,7 +162,7 @@ function InfoCard({
         </span>
       </div>
       <p
-        className="text-base font-semibold text-foreground truncate"
+        className="font-semibold text-foreground text-sm truncate"
         title={value}
       >
         {value}

@@ -46,8 +46,10 @@ import { useState } from "react";
 
 export default function CreateNewCalled({
   variant = "default",
+  children,
 }: {
   variant?: "circle" | "default";
+  children?: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -93,7 +95,7 @@ export default function CreateNewCalled({
             <PlusIcon className="w-4 h-4" />
           </Button>
         ) : (
-          <Button>Abrir chamado</Button>
+          <Button>{children || "Abrir chamado"}</Button>
         )}
       </DialogTrigger>
 
