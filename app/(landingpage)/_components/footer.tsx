@@ -117,13 +117,13 @@ export default function Footer(){
             </p>
             <div className="flex gap-6">
               <Link
-                href="#"
+                href="/legal/terms-of-use"
                 className="text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 Termos de Uso
               </Link>
               <Link
-                href="#"
+                href="/legal/privacy"
                 className="text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 Privacidade
