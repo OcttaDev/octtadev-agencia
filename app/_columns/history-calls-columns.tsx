@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "../_components/ui/badge";
-import { Call, Prisma } from "../generated/prisma/client";
+import { Call } from "../generated/prisma/client";
 import DetailsCalled from "../dashboard/lobby/[id]/_components/details-called";
 import { formatDate } from "../_lib/format-date";
 import { formatCurrency } from "../_lib/format-currency";
@@ -84,11 +84,12 @@ export const historyCallsColumns: ColumnDef<Call>[] = [
       <div className="text-right font-medium hidden lg:block">Valor</div>
     ),
     cell: ({ row }) => {
-      const amount = Number(row.getValue("price"));
+      const amount = Number((row.original as CallWithPayment).payment?.price || 0);
+      const price = formatCurrency(amount);
 
       return (
         <div className="text-right font-medium tabular-nums hidden lg:block">
-          {formatCurrency(amount)}
+          {price}
         </div>
       );
     },
