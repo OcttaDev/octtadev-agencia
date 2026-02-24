@@ -18,7 +18,7 @@ export default function ClientOpenCalls({
         <header className="flex items-center justify-between border-b pb-4">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold tracking-tight text-foreground">
+              <h1 className="text-xl font-bold tracking-tight text-foreground">
                 Chamados em Aberto
               </h1>
                <CreateNewCalled variant="circle" />
